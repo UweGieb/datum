@@ -37,7 +37,7 @@ InModuleScope -ModuleName Datum {
             }
         }
 
-        It "TargetType of result object '<DeepCopyObject>' is '<TargetType>'" -TestCases $testCases {
+        It "TargetType of result object '<DeepCopyObject>' is '<TargetType>'" -ForEach $testCases {
             param ($DeepCopyObject, $SourceType, $TargetType)
 
             $result = Copy-Object -DeepCopyObject $DeepCopyObject
@@ -45,7 +45,7 @@ InModuleScope -ModuleName Datum {
             ($result | Get-Member).TypeName | Select-Object -Unique | Should -Be $TargetType
         }
 
-        It "Source '<DeepCopyObject>' and cloned object have the same property count" -TestCases $testCases {
+        It "Source '<DeepCopyObject>' and cloned object have the same property count" -ForEach $testCases {
             param ($DeepCopyObject, $SourceType, $TargetType)
 
             $result = Copy-Object -DeepCopyObject $DeepCopyObject
@@ -53,7 +53,7 @@ InModuleScope -ModuleName Datum {
             ($result | Get-Member -MemberType Properties).Count | Should -BeGreaterOrEqual ($DeepCopyObject | Get-Member -MemberType Properties).Count
         }
 
-        It "Destination object has the property '<Property>' with value '<PropertySourceValue>'" -TestCases $propertiesTestCases {
+        It "Destination object has the property '<Property>' with value '<PropertySourceValue>'" -ForEach $propertiesTestCases {
             param ($DeepCopyObject, $TargetObject, $Property, $PropertySourceValue, $PropertyTargetValue)
 
             $PropertySourceValue = $PropertySourceValue -as [string]
