@@ -5,28 +5,29 @@ $here = $PSScriptRoot
 $global:ErrorActionPreference = 'Stop' #This is the default in Azure pipelines, but not in local tests
 Remove-Module -Name datum
 
-Describe "Datum Handler tests based on 'DscWorkshopConfigData' test data" {
-    BeforeAll {
-        Import-Module -Name datum
+BeforeDiscovery {
+    Import-Module -Name datum
 
-        $datumPath = Join-Path -Path $here -ChildPath '.\assets\DscWorkshopConfigData\Datum.yml' -Resolve
-        Write-Host "Loading datum from '$datumPath'"
-        $datum = New-DatumStructure -DefinitionFile $datumPath
+    $script:datumPath = Join-Path -Path $here -ChildPath '.\assets\DscWorkshopConfigData\Datum.yml' -Resolve
+    Write-Host "Loading datum from '$datumPath'"
+    $script:datum = New-DatumStructure -DefinitionFile $datumPath
 
-        $allNodes = $datum.AllNodes.Dev.psobject.Properties | ForEach-Object {
-            $node = $Datum.AllNodes.Dev.($_.Name)
-            (@{} + $Node)
-        }
-
-        $global:configurationData = @{
-            AllNodes = $allNodes
-            Datum    = $datum
-        }
-
-        $rsopPath = Join-Path -Path $BuildModuleOutput -ChildPath RSOP
-        $rsopWithSourcePath = Join-Path -Path $BuildModuleOutput -ChildPath RsopWithSource
-        mkdir -Path $rsopPath, $rsopWithSourcePath -Force | Out-Null
+    $script:allNodes = $datum.AllNodes.Dev.psobject.Properties | ForEach-Object {
+        $node = $Datum.AllNodes.Dev.($_.Name)
+        (@{} + $Node)
     }
+
+    $script:configurationData = @{
+        AllNodes = $allNodes
+        Datum    = $datum
+    }
+
+    $script:rsopPath = Join-Path -Path $BuildModuleOutput -ChildPath RSOP
+    $script:rsopWithSourcePath = Join-Path -Path $BuildModuleOutput -ChildPath RsopWithSource
+    mkdir -Path $rsopPath, $rsopWithSourcePath -Force | Out-Null
+}
+
+Describe "Datum Handler tests based on 'DscWorkshopConfigData' test data" {
 
     Context 'Accessing credentials with the correct key' {
 
@@ -51,7 +52,7 @@ Describe "Datum Handler tests based on 'DscWorkshopConfigData' test data" {
         }
 
         foreach ($node in $configurationData.AllNodes) {
-            $rsop = Get-DatumRsop -Datum $datum -AllNodes $node
+            $script:rsop = Get-DatumRsop -Datum $datum -AllNodes $node
             $nodeRsopPath = Join-Path -Path $rsopWithSourcePath -ChildPath "$node.yml"
             $rsop | ConvertTo-Yaml | Out-File -FilePath $nodeRsopPath
 

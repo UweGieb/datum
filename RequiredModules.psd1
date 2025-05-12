@@ -9,7 +9,7 @@
 
     InvokeBuild                 = 'latest'
     PSScriptAnalyzer            = 'latest'
-    Pester                      = '4.10.1'
+    Pester                      = '5.7.1'
     'DscResource.Test'          = 'latest'
     'DscResource.AnalyzerRules' = 'latest'
     #'DscResource.Common'        = 'latest'

@@ -1,6 +1,6 @@
 using module datum
 
-$here = $PSScriptRoot
+$script:here = $PSScriptRoot
 
 Remove-Module -Name datum
 
@@ -74,7 +74,7 @@ Describe "RSOP tests based on 'MergeTestData' test data" {
             }
         )
 
-        It "The value of Datum RSOP property '<PropertyPath>' for node '<Node>' should be '<Value>'." -TestCases $testCases {
+        It "The value of Datum RSOP property '<PropertyPath>' for node '<Node>' should be '<Value>'." -ForEach $testCases {
             param ($Node, $PropertyPath, $Value)
 
             $rsop = Get-DatumRsop -Datum $datum -AllNodes $configurationData.AllNodes -Filter { $_.NodeName -eq $Node }
@@ -125,7 +125,7 @@ Describe "RSOP tests based on 'MergeTestData' test data" {
             }
         )
 
-        It "The value of Datum RSOP property '<PropertyPath>' for node '<Node>' should be '<Value>'." -TestCases $testCases {
+        It "The value of Datum RSOP property '<PropertyPath>' for node '<Node>' should be '<Value>'." -ForEach $testCases {
             param ($Node, $PropertyPath, $Value)
 
             $rsop = Get-DatumRsop -Datum $datum -AllNodes $configurationData.AllNodes -Filter { $_.NodeName -eq $Node }

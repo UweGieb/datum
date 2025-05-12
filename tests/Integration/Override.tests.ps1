@@ -13,7 +13,7 @@ ipmo datum
 
 BeforeDiscovery {
 
-    $script:Datum = New-Datumstructure -DefinitionFile (Join-Path $here '.\DSC_ConfigData\Datum.yml' -Resolve)
+    $script:Datum = New-Datumstructure -DefinitionFile (Join-Path $here '.\assets\DSC_ConfigData\Datum.yml' -Resolve)
     $Environment = 'DEV'
     $AllNodes = @($Datum.AllNodes.($Environment).psobject.Properties | ForEach-Object {
             $Node = $Datum.AllNodes.($Environment).($_.Name)

@@ -42,7 +42,7 @@ InModuleScope -ModuleName Datum {
             }
         )
 
-        It "'Expand-RsopHashtable' returns IDictionary objects'." -TestCases $testCases {
+        It "'Expand-RsopHashtable' returns IDictionary objects'." -ForEach $testCases {
             param ($InputObject, $IsArrayValue, $AddSourceInformation, $Depth)
 
             $result = Expand-RsopHashtable -InputObject $InputObject -Depth $Depth -IsArrayValue:$IsArrayValue -AddSourceInformation:$AddSourceInformation
@@ -50,7 +50,7 @@ InModuleScope -ModuleName Datum {
             $result | Should -BeOfType [System.Collections.IDictionary]
         }
 
-        It "Items in result end with RelativeFilePath if 'AddSourceInformation' is set to '<AddSourceInformation>'." -TestCases $testCases {
+        It "Items in result end with RelativeFilePath if 'AddSourceInformation' is set to '<AddSourceInformation>'." -ForEach $testCases {
             param ($InputObject, $IsArrayValue, $AddSourceInformation, $Depth, $RelativeFilePath)
 
             $result = Expand-RsopHashtable -InputObject $InputObject -Depth $Depth -IsArrayValue:$IsArrayValue -AddSourceInformation:$AddSourceInformation

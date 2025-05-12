@@ -1,6 +1,6 @@
 using module datum
 
-$here = $PSScriptRoot
+$script:here = $PSScriptRoot
 
 Remove-Module -Name datum
 
@@ -128,7 +128,7 @@ Describe 'Merge ' {
             }
         )
 
-        It "The value of Datum <PropertyPath> for node <Node> should be '<Value>'." -TestCases $testCases {
+        It "The value of Datum <PropertyPath> for node <Node> should be '<Value>'." -ForEach $testCases {
             param ($Node, $PropertyPath, $Value)
 
             $n = $AllNodes | Where-Object NodeName -EQ $Node
@@ -172,7 +172,7 @@ Describe 'Merge ' {
             }
         )
 
-        It "The hashtable key count of Datum <PropertyPath> for node <Node> should be '<Count>'." -TestCases $testCases {
+        It "The hashtable key count of Datum <PropertyPath> for node <Node> should be '<Count>'." -ForEach $testCases {
             param ($Node, $PropertyPath, $Count)
 
             $n = $AllNodes | Where-Object NodeName -EQ $Node
@@ -239,7 +239,7 @@ Describe 'Merge ' {
             }
         )
 
-        It "The value of Datum <PropertyPath> for node <Node> should be '<ExpectedValue>'." -TestCases $testCases {
+        It "The value of Datum <PropertyPath> for node <Node> should be '<ExpectedValue>'." -ForEach $testCases {
             param ($Node, $PropertyPath, $Value, $ExpectedValue)
 
             $n = $AllNodes | Where-Object NodeName -EQ $Node
